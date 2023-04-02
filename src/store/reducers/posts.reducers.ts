@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { client } from "services/client";
 import { AppThunk } from "store";
 
-type Post = {
+export type Post = {
   id: number;
   title: string;
   body: string;
@@ -37,6 +37,7 @@ export function fetchPosts(): AppThunk {
     const response = await client.get(
       "https://jsonplaceholder.typicode.com/posts"
     );
-    dispatch(postsLoaded(response.data as Post[]));
+    const NO_OF_POSTS = 12;
+    dispatch(postsLoaded(response.data.slice(0, NO_OF_POSTS) as Post[]));
   };
 }
